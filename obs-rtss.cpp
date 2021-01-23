@@ -1,16 +1,14 @@
 #include <obs-module.h>
 #include <obs-frontend-api.h>
+#include <windows.h>
 
 #include "pch.h"
 #include "RTSSSharedMemoryInterface.h"
 
-/* Defines common functions (required) */
-OBS_DECLARE_MODULE()
-
-/* Implements common ini-based locale (optional) */
-OBS_MODULE_USE_DEFAULT_LOCALE("obs-rtss", "en-US")
-
 CRTSSSharedMemoryInterface *rtss;
+
+OBS_DECLARE_MODULE()
+OBS_MODULE_USE_DEFAULT_LOCALE("obs-rtss", "en-US")
 
 void obs_osd_frontend_event_callback(enum obs_frontend_event event, void *private_data)
 {
@@ -52,8 +50,8 @@ void obs_osd_frontend_event_callback(enum obs_frontend_event event, void *privat
 		case OBS_FRONTEND_EVENT_REPLAY_BUFFER_STOPPED:
 			break;
 		case OBS_FRONTEND_EVENT_REPLAY_BUFFER_SAVED:
-			rtss->UpdateOSD("obs-rtss-replay", "Clipped");
-			sleep(5);
+			rtss->UpdateOSD("obs-rtss-replay", "Replay Saved");
+			Sleep(5000);
 			rtss->ReleaseOSD("obs-rtss-replay");
 			break;
 	}
